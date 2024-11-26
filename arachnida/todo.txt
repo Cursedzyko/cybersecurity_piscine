@@ -1,0 +1,18 @@
+1) create 2 programs (can be scripts or binaries)
+2) can use language to make HTTP requests and handle files, but logic developed by myself
+3) wget and scrapy will be cheating
+
+Spider:
+1) spider program extracts all the images from a website, recursively by providing url as param
+./spider url
+
+Program have to download:
+.jpg/.jpeg
+.png
+.gif
+.bmp
+
+Options to manage:
+1) -r: recursive downloads the images in URL 
+2) -r -l [N]: indicates max depth level of the recursive download (if not indicated, will be 5)
+3) -p [PATH]: path where to save downloaded images(if not specified, will be ./data/)
