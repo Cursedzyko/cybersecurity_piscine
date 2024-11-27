@@ -17,7 +17,14 @@ def download_img(img_url, save_path):
     except Exception as e:
         print(f"Failed to download {img_url} : {e} ")
 
-def scrape_img(url, save_path):
+def scrape_img(url, save_path, depth=0, current_level=0, visited=None):
+    if current_level > depth:
+        return
+    if visited is None:
+        visited = set()
+    if url in visited:
+        return
+    visited.add(url)
     try:
         response = requests.get(url)
         response.raise_for_status()
@@ -34,10 +41,12 @@ def scrape_img(url, save_path):
                 if img_url.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".bmp")):
                     download_img(img_url, save_path)
                 
-
-
+        if depth>0:
+            for a_tag in soup.find_all('a', href=True):
+                next_url = urljoin(url, a_tag['href'])
+                scrape_img(next_url, save_path, depth, current_level + 1, visited)
     except Exception as e:
-        print(f"Failed to proccess {url} : {e}!")
+        print(f"Failed to process {url} : {e}!")
 
 def main():
     parser = argparse.ArgumentParser(description="A Spider program to download pictures", usage="python spider url -r -l [L](depth level) -p [P](path)")
@@ -52,7 +61,7 @@ def main():
 
     print(save_path)
     os.makedirs(save_path, exist_ok=True)
-    scrape_img(args.url, save_path)
+    scrape_img(args.url, save_path, args.l if args.r else 0)
 
 if __name__ == "__main__":
     main()

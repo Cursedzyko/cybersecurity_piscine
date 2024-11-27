@@ -1,0 +1,13 @@
+Scorpion:
+
+receives files as param. 
+have to parse EXIF and other metadata and display on the screen
+
+.jpg/.jpeg
+.png
+.gif
+.bmp
+
+have to output
+creation date
+also EXIF
