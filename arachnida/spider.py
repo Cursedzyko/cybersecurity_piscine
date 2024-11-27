@@ -1,8 +1,8 @@
-import argparse
-import os
-import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
+import argparse # to parse arguments from commandline
+import os # to create dirs
+import requests # to make http request
+from bs4 import BeautifulSoup # to scrape images from html
+from urllib.parse import urljoin # to make relative path to img, to join url and img(src) or a(href)
 
 def download_img(img_url, save_path):
     try:
