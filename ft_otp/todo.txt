@@ -1,0 +1,37 @@
+TOTP (Time-base One Time Password)
+https://datatracker.ietf.org/doc/html/rfc6238
+
+Program:
+
+stores initial Password in file
+needs to generate 1time Password everytime requested 
+
+prohibited to use TOTP libraries 
+
+
+allowed to use libraries to get system time
+
+
+1) exec file have to be named ft_otp
+2) must use HOTP algorithm (RFC 4226)
+3) generated one-time Password must be random and must always contain same format i.e 6 digits
+
+Params:
+-g: a hex key at least 64 chars and program should store it safely in file called ft_otp.key(have to be encrypted)
+-k: based on the key generates a new temp Password and prints it 
+
+example:
+$ echo -n "NEVER GONNA GIVE YOU UP" > key.txt
+$ ./ft_otp -g key.txt
+./ft_otp: error: key must be 64 hexadecimal characters.
+$ [..]
+$ cat key.hex | wc -c
+64
+$ ./ft_otp -g key.hex
+Key was successfully saved in ft_otp.key.
+$ ./ft_otp -k ft_otp.key
+836492
+$ sleep 60
+$ ./ft_otp -k ft_otp.key
+123518
+
