@@ -11,3 +11,6 @@ have to parse EXIF and other metadata and display on the screen
 have to output
 creation date
 also EXIF
+
+
+install hachoir, Pillow
