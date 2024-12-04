@@ -1,17 +1,17 @@
 import sys
 import time
 from cryptography.fernet import Fernet
+import hashlib
+import hmac
 
 def validate_key(key):
     return len(key) == 64 and all(c in '0123456789abcdef' for c in key)
 
 def save_enc_key(enc_key, enc_key_file='ft_otp.enc_key'):
-    """Save the encryption key to a file."""
     with open(enc_key_file, 'wb') as file:
         file.write(enc_key)
 
 def load_enc_key(enc_key_file='ft_otp.enc_key'):
-    """Load the encryption key from a file."""
     try:
         with open(enc_key_file, 'rb') as file:
             return file.read()
@@ -20,7 +20,6 @@ def load_enc_key(enc_key_file='ft_otp.enc_key'):
         sys.exit(1)
 
 def encrypt_key(hex_key, enc_key_file='ft_otp.key'):
-    """Encrypt the HOTP key and save it."""
     enc_key = Fernet.generate_key()
     save_enc_key(enc_key)  # Save the encryption key
     cipher_suite = Fernet(enc_key)
@@ -29,7 +28,6 @@ def encrypt_key(hex_key, enc_key_file='ft_otp.key'):
         file.write(encrypted_key)
 
 def decrypt_key(enc_key, enc_key_file='ft_otp.key'):
-    """Decrypt the HOTP key."""
     try:
         with open(enc_key_file, 'rb') as file:
             encrypted_key = file.read()
@@ -40,7 +38,14 @@ def decrypt_key(enc_key, enc_key_file='ft_otp.key'):
         sys.exit(1)
 
 def generate_otp(hex_key, counter):
-    pass
+    key = bytes.fromhex(hex_key)
+    counter_bytes = counter.to_bytes(8, 'big')
+    hmac_digest = hmac.new(key, counter_bytes, hashlib.sha1).digest()
+    offset = hmac_digest[-1] & 0x0F
+    binary_code = int.from_bytes(hmac_digest[offset:offset + 4], 'big') & 0x7FFFFFFF
+    otp = binary_code % 1000000
+    return f"{otp:06}"
+
 
 def main():
     if len(sys.argv) < 3:
