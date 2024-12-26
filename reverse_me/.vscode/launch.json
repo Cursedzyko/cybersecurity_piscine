@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/media/zyko/DATA/42coding/cybersecurity_piscine/reverse_me/level1",
-      "program": "/media/zyko/DATA/42coding/cybersecurity_piscine/reverse_me/level1/build/Debug/outDebug",
+      "cwd": "/media/zyko/DATA/42coding/cybersecurity_piscine/reverse_me",
+      "program": "/media/zyko/DATA/42coding/cybersecurity_piscine/reverse_me/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
