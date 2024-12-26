@@ -3,11 +3,12 @@
 
 int main()
 {
-    char str[100];
+    char str[20];
+    char *exp = "__stack_check";
     printf("Please enter key: ");
     scanf("%s", str);
 
-    if (strcmp( str, "__stack_check") == 0)
+    if (strcmp( str, exp) == 0)
     {
         printf("Good job!\n");
     }
